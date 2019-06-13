@@ -1,0 +1,17 @@
+.socials-sidebar{
+  height: fit-content;
+  width: fit-content;
+  position: fixed;
+  top: 50vh;
+  background: #eee;
+}
+
+.socials-sidebar-link{
+  width: 2rem;
+  height: 2rem;
+  border-bottom: solid thin #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+}

@@ -1,0 +1,14 @@
+.post-panel{
+
+  // Top post gets bigger card size
+  &:first-of-type{
+    height: 400px;
+    max-height: 550px;
+  }
+
+  // height: fit-content;
+  height: 200px;
+  max-height: 250px;
+
+
+}

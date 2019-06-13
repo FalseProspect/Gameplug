@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: rgb(34, 34, 34);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Montserrat", sans-serif;
+  height: 100vh;
+  margin: -20px 0 50px;
+}
+
+h1 {
+  font-weight: bold;
+  margin: 0;
+  color: #ccc;
+}
+
+h2 {
+  text-align: center;
+}
+
+p {
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  margin: 20px 0 30px;
+}
+
+span {
+  font-size: 12px;
+}
+
+a {
+  color: #ccc;
+  font-size: 1rem;
+  text-decoration: none;
+  margin: 15px 0;
+}
+
+.method-button-container{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+button {
+  border-radius: 20px;
+  border: 1px solid #ff4b2b;
+  background-color: #ff4b2b;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px .1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  width: 250px;
+  margin: 7px auto;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
+}
+
+button.ghost {
+  background-color: transparent;
+  border-color: #ffffff;
+}
+
+form {
+  /* background-color: #ffffff; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+  text-align: center;
+}
+
+input {
+  margin: 8px 0;
+  border: none;
+  visibility: hidden;
+  position: absolute;
+  height: 0px;
+  opacity: 0;
+  padding: 0;
+  width: 0px;
+  transition: all ease .3s;
+}
+
+.container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 950px;
+  height: 100%;
+  max-height: 100%;
+}
+
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+.method-container {
+  left: 0;
+  right: 0;
+  width: 80%;
+  margin: auto;
+  z-index: 2;
+}
+
+.social-container {
+  margin: 20px 0;
+}
+
+.social-container a {
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  height: 55px;
+  width: 55px;
+  color: #ccc;
+}
+
+.social-container a:hover{
+  color: #ff4b2b;
+}
