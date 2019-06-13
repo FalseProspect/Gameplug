@@ -1,121 +1,120 @@
-import { Injectable, NgZone } from '@angular/core';
-import { User } from "../models/user";
+import { Injectable } from "@angular/core";
 import { auth } from "firebase/app";
+import { User } from "../models/user";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/firestore";
-import { Router } from "@angular/router";
+import {
+  AngularFirestore,
+  AngularFirestoreDocument
+} from "@angular/fire/firestore";
+import * as EC from "elliptic/lib/elliptic/ec";
+import { NotificationService } from './notification.service';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthService {
-  userData: any; // Save logged in user data
+  name: string = 'Authorization';
+  userData: firebase.User;
+  userCredentials: User;
+  secretKey: string = 'LOCAL';
+  func: string = 'v0';
 
-  constructor(public afs: AngularFirestore, public afAuth: AngularFireAuth, public router: Router, public ngZone: NgZone) { 
-    /* Saving user data in localstorage when logged in and setting up null when logged out */
+  constructor(
+    public afs: AngularFirestore,
+    public afAuth: AngularFireAuth,
+    public notifier:NotificationService,
+    public router: Router
+  ) {
     this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
+      user ? console.log(user) : console.log("No User Profile");
+      this.userData = user ? user : null;
+      user ? localStorage.setItem("user", JSON.stringify(this.userData)) : 0;
+
+      if(user){
+        if(localStorage.getItem("userCredentials")){
+          this.userCredentials = JSON.parse(localStorage.getItem('userCredentials'));
+          this.secretKey = this.userCredentials.privateKey;
+        }
+        else
+          this.afs.doc(`users/${user.uid}`).valueChanges().subscribe(data => {
+            localStorage.setItem('userCredentials', JSON.stringify(data));
+            this.userCredentials = data as User;
+            this.secretKey = this.userCredentials.privateKey;
+          })
       }
-      else {
-        localStorage.setItem('user', null);
-      }
-    })
+
+      this.secretKey = user ? this.userCredentials.privateKey : 'LOCAL';
+
+    });
   }
 
-  get getLoggedInUser(){
-    if(this.isLoggedIn)
-      return JSON.parse(localStorage.getItem('user'));
-    else
-      this.SignOut();
-   }
-
-      // Returns true when user is looged in and email is verified
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null && user.emailVerified !== false) ? true : false;
-  }
-
-    // Sign in with email/password
-  SignIn(email, password) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.ngZone.run(() => this.router.navigate(['main']));
-        this.SetUserData(result.user);
-      })
-      .catch((error) => window.alert(error.message))
-  }
-
-  // Sign up with email/password
-  SignUp(email, password) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign up and returns promise */
-        this.SendVerificationMail();
-        this.SetUserData(result.user);
-      })
-      .catch((error) => window.alert(error.message))
-  }
-
-  // Send email verfificaiton when new user sign up
-  SendVerificationMail() {
-    return this.afAuth.auth.currentUser.sendEmailVerification()
-      .then(() => this.router.navigate(['verify-email-address']))
-  }
-
-  // Reset password
-  ForgotPassword(passwordResetEmail) {
-    return this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail)
-      .then(() => window.alert('Password reset email sent, check your inbox.'))
-      .catch((error) => window.alert(error))
+  getUserData() : firebase.User {
+    return JSON.parse(localStorage.getItem("user"));
   }
 
   // Sign in with Google
-  GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
-  }
-
-  // Sign in with Github
-  GithubAuth() {
-    return this.AuthLogin(new auth.GithubAuthProvider());
-  }
-
-  // Sign in with Twitter
-  TwitterAuth() {
-    return this.AuthLogin(new auth.TwitterAuthProvider());
+  async googleAuth() {
+    return await this.authLogin(new auth.GoogleAuthProvider());
   }
 
   // Auth logic to run auth providers
-  AuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((result) => {
-        this.ngZone.run(() => this.router.navigate(['dashboard']))
-        this.SetUserData(result.user);
+  async authLogin(provider) {
+    return await this.afAuth.auth.signInWithPopup(provider)
+      .then( data => {
+        if(data.additionalUserInfo.isNewUser) this.SetUserData(data)
       })
-      .catch((error) => window.alert(error))
+      .catch( err => this.notifier.notify(err, 'bad', this.name));
   }
 
- /* Setting up user data when sign in with username/password, sign up with username/password and sign in with social auth  
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+  // Sign out
+  async signOut() {
+    const logout = await this.afAuth.auth.signOut()
+      .catch(err => this.notifier.notify(err, 'bad', this.name))
+    this.userData = null;
+    this.userCredentials = null;
+    localStorage.removeItem('keyring');
+    localStorage.removeItem('tutorialEnabled');
+    localStorage.removeItem('userCredentials');
+    return localStorage.removeItem('user');
+  }
+
+  // Generates a User Model to firestore on creation
+  SetUserData(user: auth.UserCredential) {
+    const ec = new EC('secp256k1');
+    const key = ec.genKeyPair();
+    const publicKey = key.getPublic('hex');
+    const privateKey = key.getPrivate('hex');
+
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.user.uid}`);
     const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified
+      credential: user.credential.toJSON(),
+      user: user.user.toJSON(),
+      uid: user.user.uid,
+      email: user.user.email,
+      displayName: user.user.displayName,
+      photoURL: user.user.photoURL,
+      emailVerified: user.user.emailVerified,
+      publicKey: publicKey,
+      privateKey: privateKey
     }
-    return userRef.set(userData, {merge: true})
+    // TODO: Reserved utility item
+    localStorage.setItem('tutorialEnabled','true');
+    userRef.set(userData, {merge: true})
+    return this.router.navigate(['tutorial'])
   }
 
-  // Sign out 
-  SignOut() {
-    return this.afAuth.auth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['sign-in']);
-    })
+  async terminateAccount(){
+    const user = this.getUserData();
+    await this.afs.doc(`users/${user.uid}`).delete();
+    await this.afAuth.auth.currentUser.delete()
+      .then(async ()=> {
+        this.notifier.notify('Account Terminated', 'good')
+        this.notifier.notify('Thank you for trying Crypt 🙂')
+        this.userData = null;
+        return this.signOut();
+      })
+      .catch(err => this.notifier.notify(err))
   }
 
 }

@@ -1,49 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
-@import'reset.css';
-
-// @import'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
-
-@import url('https://fonts.googleapis.com/css?family=Fira+Sans');
-@import url('https://fonts.googleapis.com/css?family=Saira');
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
+@import'Reset.css';
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,200,300,400&display=swap');
 
 :root{
-  --mainAccent: #ff5dae;
+  --mainAccent: #fff;
+  --mainTextColor: #202124;
+  --mainFont: 'Helvetica';
 }
 
-body{
-  background: #f9f9fa;
+body {
+  font-family: var(--mainFont);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--mainTextColor);
+  line-height: 1.6;
+  background: var(--mainAccent);
+  transition: all ease 300ms;
+
 }
 
-button,
-.button{
-  width: 110px;
-  border-radius: 3px;
-  padding: .5rem 1rem;
-  background: #eee;
-  border: none;
-  font-size: 14.4px;
-  text-decoration: none;
-  color: #444;
-}
-
-.wrapper{
-  padding: 0 1rem;
-  padding-top: 7rem;
-  max-width: 1250px;
-  margin: 0 auto;
-}
-
-.panel{
-  background: #fff;
-  width: 100%;
-  border-radius: 3px;
-  border: 1px solid #d6d6d6;
-  box-shadow: 1px 1px 0px #c2c2c2;
-  margin: 0 auto;
-  margin-bottom: 1rem;
-}
-
-.side-panel{
-  width: 275px;
+@media(max-width: 700px){
 }

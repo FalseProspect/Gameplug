@@ -1,0 +1,136 @@
+.home-wrapper {
+  position: relative;
+}
+
+span{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: fit-content;
+  align-self: left;
+  justify-self: left;
+  text-align: left;
+  font-weight: bold;
+  font: 1.4rem;
+  padding: .2rem;
+  cursor: pointer;
+  color: var(--mainTextColor);
+  transition: all ease 200ms;
+
+}
+
+header {
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.message-area {
+  width: 600px;
+  height: fit-content;
+  padding: 1rem;
+  font-weight: 400;
+  color: #202124;
+  background: #fff;
+  line-height: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+    0 2px 6px 2px rgba(60, 64, 67, 0.149);
+  transition: all ease 150ms;
+
+  .message-mobile-nav{
+    display: none;
+  }
+
+  .message-title {
+    display: none;
+    line-height: 1rem;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    opacity: 0;
+    transition: all ease 150ms;
+  }
+
+  .message-tags{
+    display: none;
+    line-height: .75rem;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: .75rem;
+    background: none;
+    border: none;
+    opacity: 0;
+    transition: all ease 150ms;
+    margin-top: .5rem;
+  }
+
+  .message-text {
+    width: 100%;
+    height: 1rem;
+    max-height: 500px;
+    line-height: 1rem;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    color: #202124;
+    background: none;
+    border: none;
+    resize: none;
+    outline: none;
+    transition: all ease 150ms;
+    // overflow-y: scroll;
+    overflow: hidden;
+  }
+
+  &:focus-within {
+    .message-title,
+    .message-tags {
+      display: block;
+      opacity: 1;
+    }
+    .message-text {
+      padding-top: .5rem;
+      height: 200px;
+    }
+    // background: #202124;
+  }
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  justify-content: center;
+  grid-gap: 1rem;
+  transition: all ease 300ms;
+}
+
+@media (max-width: 700px){
+
+  .home-wrapper{
+    &header .message-area:focus-within{
+      overflow: hidden;
+    }
+  }
+
+  .message-area{
+    &:focus-within{
+      .message-mobile-nav{
+        display: block;
+        svg{
+          cursor: pointer;
+          height: 22px;
+        }
+      }
+      padding-top: 1rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 111;
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+}

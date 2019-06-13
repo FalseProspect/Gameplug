@@ -1,3 +1,4 @@
+import { HomeComponent } from './components/home/home.component';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -13,28 +14,33 @@ import { FirebaseService } from "./services/firebase.service";
 import { AuthService } from './services/auth.service';
 
 import { AppComponent } from './app.component';
-import { WelcomeComponent } from './components/welcome/welcome.component';
-import { MainComponent } from './components/main/main.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { FeedComponent } from './components/feed/feed.component';
-import { SocialsSidebarComponents } from './components/socials-sidebar/socials-sidebar.component';
 import { NewPostComponent } from './components/new-post/new-post.component';
-import { ProfileComponent } from './components/user/profile/profile.component';
-import { SettingsComponent } from './components/user/settings/settings.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { MainMenuComponent } from './components/main-menu/main-menu.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { PromoComponent } from './components/promo/promo.component';
+import { TutorialComponent } from './components/tutorial/tutorial.component';
+import { NewsletterComponent } from './components/newsletter/newsletter.component';
+import { CommentsComponent } from './components/comments/comments.component';
+// import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WelcomeComponent,
-    MainComponent,
-    DashboardComponent,
-    NavigationBarComponent,
     FeedComponent,
-    SocialsSidebarComponents,
     NewPostComponent,
     ProfileComponent,
-    SettingsComponent
+    HomeComponent,
+    MainMenuComponent,
+    NavigationComponent,
+    LoadingComponent,
+    PromoComponent,
+    TutorialComponent,
+    NewsletterComponent,
+    CommentsComponent,
+    // NotificationComponent
   ],
   imports: [
     BrowserModule,
