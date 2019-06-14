@@ -14,9 +14,5 @@ export class PromoComponent implements OnInit {
   }
 
   signIn(){
-    if(this.app.authorizer.getUserData())
-      return this.app.router.navigate(['app', this.app.currentKey])
-    else
-      this.app.googleAuth();
   }
 }

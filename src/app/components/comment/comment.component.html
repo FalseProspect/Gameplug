@@ -1,0 +1,7 @@
+<li class="comment-wrapper">
+  {{comment.message}}
+  <ul *ngIf="app.commentBin[comment.parentSection]">
+    <app-comment *ngFor='let reply of app.commentBin[comment.parentSection] | commentFilter:comment.id' [comment]="reply"></app-comment>
+  </ul>
+  <input *ngIf="targeted" placeholder="reply to comment" type="text" (keydown.enter)="replyComment(replyInput)" #replyInput>
+<li>

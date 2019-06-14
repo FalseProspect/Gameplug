@@ -1,7 +1,8 @@
 export interface Comment{
-  parentId: string;
-  id: string;
+  parentSection?: string;
+  parentComment?: string;
+  id?: any;
   message: string;
-  author: string;
-  children: Comment[];
+  author?: string;
+  children?: any;
 }

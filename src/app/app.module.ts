@@ -23,7 +23,9 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { PromoComponent } from './components/promo/promo.component';
 import { TutorialComponent } from './components/tutorial/tutorial.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
-import { CommentsComponent } from './components/comments/comments.component';
+import { CommentSectionComponent } from './components/comment-section/comment-section.component';
+import { CommentComponent } from './components/comment/comment.component';
+import { CommentFilterPipe } from './pipes/comment-filter.pipe';
 // import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
@@ -39,14 +41,16 @@ import { CommentsComponent } from './components/comments/comments.component';
     PromoComponent,
     TutorialComponent,
     NewsletterComponent,
-    CommentsComponent,
+    CommentSectionComponent,
+    CommentComponent,
+    CommentFilterPipe,
     // NotificationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule
   ],
   providers: [

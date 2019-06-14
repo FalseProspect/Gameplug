@@ -1,0 +1,14 @@
+.comment-wrapper{
+  
+  &:active,&:hover{
+    background: var(--mainTransparent);
+  }
+
+  ul{
+    margin-left: 1rem;
+  }
+  
+  input{
+    margin-left: 1rem;
+  }
+}

@@ -1,3 +1,4 @@
+import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -8,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'profile', component: ProfileComponent},
+  { path: 'comments', component: CommentSectionComponent},
   { path: 'new', component: NewPostComponent},
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

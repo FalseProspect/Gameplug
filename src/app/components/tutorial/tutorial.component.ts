@@ -23,7 +23,6 @@ export class TutorialComponent implements OnInit {
     if(($event.target as HTMLElement).classList.contains('tutorial-wrapper')){
       localStorage.setItem('tutorialEnabled', 'false')
       this.selfRef.remove();
-      this.app.router.navigate(['app',this.app.currentKey]);
     }
   }
 
