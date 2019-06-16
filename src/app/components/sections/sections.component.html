@@ -1,0 +1,6 @@
+<div class="" *ngIf="app.sectionBin">
+  <app-section *ngFor="let section of app.sectionBin" [section]="section"></app-section>
+</div>
+
+
+<input type="text" placeholder="make section" name="" id="" (keydown.enter)="makeSection(sectionInput)" #sectionInput>

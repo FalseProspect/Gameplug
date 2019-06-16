@@ -5,11 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { NewPostComponent } from "./components/new-post/new-post.component";
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
+import { SectionsComponent } from './components/sections/sections.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'profile', component: ProfileComponent},
   { path: 'comments', component: CommentSectionComponent},
+  { path: 'sections', component: SectionsComponent},
   { path: 'new', component: NewPostComponent},
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

@@ -26,6 +26,8 @@ import { NewsletterComponent } from './components/newsletter/newsletter.componen
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { CommentFilterPipe } from './pipes/comment-filter.pipe';
+import { SectionsComponent } from './components/sections/sections.component';
+import { SectionComponent } from './components/section/section.component';
 // import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
@@ -44,6 +46,8 @@ import { CommentFilterPipe } from './pipes/comment-filter.pipe';
     CommentSectionComponent,
     CommentComponent,
     CommentFilterPipe,
+    SectionsComponent,
+    SectionComponent,
     // NotificationComponent
   ],
   imports: [

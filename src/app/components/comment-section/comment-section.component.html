@@ -1,5 +1,3 @@
-<input type="text" placeholder="sectionID" value="{{sectionID}}" name="" id="" (keydown.enter)="getComments(sectionIDInput.value)" #sectionIDInput>
-
 <div class="" *ngIf="app.commentBin[sectionID]" >
   <app-comment *ngFor="let comment of app.commentBin[sectionID] | commentFilter" [comment]="comment"></app-comment>
 </div>

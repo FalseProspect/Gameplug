@@ -1,6 +1,6 @@
 import { AppService } from "src/app/services/app.service";
-import { Component, OnInit } from "@angular/core";
-import { Comment } from "../../models/comment";
+import { Component, OnInit, Input } from "@angular/core";
+import { UserComment } from "../../models/userComment";
 
 @Component({
   selector: "app-comment-section",
@@ -8,8 +8,7 @@ import { Comment } from "../../models/comment";
   styleUrls: ["./comment-section.component.scss"]
 })
 export class CommentSectionComponent implements OnInit {
-  sectionID: string = "Deafult";
-  comments: Comment[];
+  @Input() sectionID: string = 'Default';
 
   constructor(public app: AppService) {}
 
@@ -17,13 +16,14 @@ export class CommentSectionComponent implements OnInit {
     this.getComments(this.sectionID)
   }
 
+  // TODO: Need a way to sort index
   getComments(input: string){
     this.app.getComments(input)
   }
 
   makeComment(input: HTMLInputElement) {
     const message = input.value;
-    const comment: Comment = {
+    const comment: UserComment = {
       parentSection: this.sectionID,
       parentComment: null,
       message,

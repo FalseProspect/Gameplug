@@ -27,6 +27,7 @@ export class AppService {
   online: boolean = navigator.onLine;
   userData: any;
   commentBin: any = {};
+  sectionBin: any = [];
 
   constructor(
     public router: Router,
@@ -40,6 +41,13 @@ export class AppService {
     this.userData = this.authorizer.getUserData();
   }
 
+
+  getSections(){
+    this.db.getSections().subscribe(data => {
+      this.sectionBin = data;
+      console.log(this.sectionBin)
+    })
+  }
 
   getComments(sectionID){
     this.db.getComments(sectionID).subscribe(data => {

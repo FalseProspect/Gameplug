@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Comment } from "../models/comment";
+import { UserComment } from "../models/userComment";
 @Pipe({
   name: 'commentFilter'
 })
 export class CommentFilterPipe implements PipeTransform {
 
-  transform(value: Comment[], args?: any): any {
+  transform(value: UserComment[], args?: any): any {
     if(args)
       return value.filter(e => e.parentComment === args)
     else

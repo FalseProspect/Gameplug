@@ -1,4 +1,4 @@
-export interface Comment{
+export interface UserComment{
   parentSection?: string;
   parentComment?: string;
   id?: any;

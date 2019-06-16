@@ -1,13 +1,13 @@
 import { AppService } from "src/app/services/app.service";
 import { Component, OnInit, Input } from "@angular/core";
-import { Comment } from "../../models/comment";
+import { UserComment } from "../../models/userComment";
 @Component({
   selector: "app-comment",
   templateUrl: "./comment.component.html",
   styleUrls: ["./comment.component.scss"]
 })
 export class CommentComponent implements OnInit {
-  @Input() comment: Comment;
+  @Input() comment: UserComment;
   targeted: boolean = true;
 
   constructor(public app: AppService) {}
@@ -19,7 +19,7 @@ export class CommentComponent implements OnInit {
 
   replyComment(input: HTMLInputElement) {
     const message = input.value;
-    const comment: Comment = {
+    const comment: UserComment = {
       parentSection: this.comment.parentSection,
       parentComment: this.comment.id,
       message,

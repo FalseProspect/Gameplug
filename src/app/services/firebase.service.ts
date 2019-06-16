@@ -1,42 +1,59 @@
 import { Injectable } from "@angular/core";
-import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/firestore";
-import { Item } from "../models/item";
-import { Comment } from "../models/comment";
+import {
+  AngularFirestore,
+  AngularFirestoreDocument
+} from "@angular/fire/firestore";
+import { UserComment } from "../models/userComment";
 import { AuthService } from "./auth.service";
-import { AngularFirestoreCollection } from '@angular/fire/firestore';
-import * as firebase from 'firebase';
+import { AngularFirestoreCollection } from "@angular/fire/firestore";
+import * as firebase from "firebase";
+import { ProjectSection } from "../models/projectSection";
 
 @Injectable({
   providedIn: "root"
 })
 export class FirebaseService {
   user: any;
-  
+
   constructor(public auth: AuthService, public db: AngularFirestore) {}
-  
+
   // ! CRITICAL PROBLEM: BEING CALLED BEFORE FULLY INITALIZED
   // ! Refactor
-  
+
   verifyUser() {
     this.user = this.auth.getUserData();
     // console.log(this.user)
     return this.user;
   }
-  
-  getComments(parentID){
-    const comments: AngularFirestoreCollection<Comment> = this.db.collection(`commentSections/${parentID}/comments`);
-    return comments.valueChanges()
+
+  getSections(){
+    return this.db.collection(`sections`).valueChanges();
   }
-  
-  makeComment(comment:Comment){
+
+  makeSection(section: ProjectSection) {
+    section.id = this.db.createId();
+    return this.db.doc(`sections/${section.id}`).set(section);
+  }
+
+  getComments(parentID) {
+    return this.db.collection(`sections/${parentID}/comments`).valueChanges();
+  }
+
+  makeComment(comment: UserComment) {
     comment.id = this.db.createId();
-    if(comment.parentComment !== null){
-      const parentComment: AngularFirestoreDocument<Comment> = this.db.doc(`commentSections/${comment.parentSection}/comments/${comment.parentComment}`);
-      parentComment.update({children: firebase.firestore.FieldValue.arrayUnion(comment.id)})
-    }
-    console.log(comment)
-    const comments: AngularFirestoreCollection<Comment> = this.db.collection(`commentSections/${comment.parentSection}/comments`);
-    return comments.doc(comment.id).set(comment);
+    // Append ID to its parenting
+    if (comment.parentComment !== null)
+      this.db
+        .doc(
+          `sections/${comment.parentSection}/comments/${comment.parentComment}`
+        )
+        .update({
+          children: firebase.firestore.FieldValue.arrayUnion(comment.id)
+        });
+    return this.db
+      .collection(`sections/${comment.parentSection}/comments`)
+      .doc(comment.id)
+      .set(comment);
   }
 
   getUserProfileData() {
