@@ -1,5 +1,15 @@
-<section>
-  {{section.id}}
-  {{section.content}}
+<section class="section-wrapper">
+  <div class="section-image"></div>
+  <p class="section-author">
+    {{section.author}}
+  </p>
+  <div class="section-content">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, consectetur? Voluptate nihil facere harum atque recusandae? Asperiores dicta ipsum sit molestias cupiditate quisquam officia aliquid voluptates tempora pariatur. Quibusdam in tenetur odit qui omnis maiores fugit ex iure? Accusantium corrupti, porro alias modi delectus provident quas, magni earum necessitatibus maiores itaque voluptatum vero dicta sed atque eaque facere expedita enim. Ut voluptas inventore assumenda minus ratione ipsa earum rerum, porro veniam repellat eveniet sed error dolorem odit deleniti. Placeat odio nisi rerum fugit, iusto repellat suscipit, ea nesciunt fugiat optio ipsum, amet ullam. Illum, placeat. Animi libero cumque in necessitatibus officiis sequi incidunt, totam aperiam voluptatibus amet ratione ut at iusto est, itaque magni dicta ex asperiores architecto rem. Qui magni assumenda voluptatem laborum aliquam similique sunt fuga veritatis deserunt nemo ea a, expedita amet minus delectus odio aperiam libero quam maxime aliquid. Quam perferendis culpa repellendus nobis veritatis enim libero architecto tenetur voluptatem. Explicabo sapiente saepe porro inventore nam eveniet animi iure aspernatur officia eligendi cum, soluta odio dolor quo, odit laudantium suscipit? Asperiores nulla cum, veniam voluptatibus iste commodi tempore repellat voluptatem animi blanditiis aperiam ab sunt expedita qui quibusdam praesentium aliquam sequi iusto. Placeat cum, doloremque odit tenetur repellendus sit, quisquam aliquam molestiae rerum nemo iure numquam voluptatum soluta asperiores dolorem ipsum! Perferendis, nesciunt adipisci cumque aliquam voluptate vitae et asperiores est? Sint dolorum voluptatibus doloribus! Rerum perferendis eum corporis laboriosam ea vitae maiores impedit temporibus asperiores nam cupiditate ad optio voluptatem molestias, vel, pariatur unde harum!</p>
+  </div>
+
+  <input class="toggle-comments" type="button" [attr.value]="commentsExpaned ? 'Hide Comments' : 'Show Comments'" (click)="toggleCommentSection()">
+  <app-comment-section
+    *ngIf="commentsExpaned"
+    [sectionID]="section.id"
+  ></app-comment-section>
 </section>
-<app-comment-section [sectionID]="section.id"></app-comment-section>

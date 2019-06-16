@@ -7,10 +7,16 @@ import { ProjectSection } from 'src/app/models/projectSection';
   styleUrls: ['./section.component.scss']
 })
 export class SectionComponent implements OnInit {
-  @Input() section: ProjectSection
+  @Input() section: ProjectSection;
+  commentsExpaned: boolean;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  toggleCommentSection(){
+    this.commentsExpaned = !this.commentsExpaned;
   }
 
 }
