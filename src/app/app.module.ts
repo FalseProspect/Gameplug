@@ -28,6 +28,8 @@ import { CommentComponent } from './components/comment/comment.component';
 import { CommentFilterPipe } from './pipes/comment-filter.pipe';
 import { SectionsComponent } from './components/sections/sections.component';
 import { SectionComponent } from './components/section/section.component';
+import { PostingComponent } from './components/posting/posting.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 // import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
@@ -48,6 +50,8 @@ import { SectionComponent } from './components/section/section.component';
     CommentFilterPipe,
     SectionsComponent,
     SectionComponent,
+    PostingComponent,
+    NotFoundComponent,
     // NotificationComponent
   ],
   imports: [

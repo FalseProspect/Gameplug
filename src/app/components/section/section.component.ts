@@ -19,4 +19,10 @@ export class SectionComponent implements OnInit {
     this.commentsExpaned = !this.commentsExpaned;
   }
 
+  openPosting($event:MouseEvent){
+    if(!($event.target as HTMLElement).classList.contains('toggle-comments'))
+      return
+    console.log($event.target)
+  }
+
 }

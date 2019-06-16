@@ -6,7 +6,7 @@ import {
 import { UserComment } from "../models/userComment";
 import { AuthService } from "./auth.service";
 import { AngularFirestoreCollection } from "@angular/fire/firestore";
-import * as firebase from "firebase";
+import { firestore } from "firebase/app";
 import { ProjectSection } from "../models/projectSection";
 
 @Injectable({
@@ -30,6 +30,10 @@ export class FirebaseService {
     return this.db.collection(`sections`).valueChanges();
   }
 
+  getSection(id){
+    return this.db.doc(`sections/${id}`).valueChanges();
+  }
+
   makeSection(section: ProjectSection) {
     section.id = this.db.createId();
     return this.db.doc(`sections/${section.id}`).set(section);
@@ -48,7 +52,7 @@ export class FirebaseService {
           `sections/${comment.parentSection}/comments/${comment.parentComment}`
         )
         .update({
-          children: firebase.firestore.FieldValue.arrayUnion(comment.id)
+          children: firestore.FieldValue.arrayUnion(comment.id)
         });
     return this.db
       .collection(`sections/${comment.parentSection}/comments`)

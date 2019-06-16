@@ -1,0 +1,20 @@
+<div class="posting-wrapper" *ngIf="posting">
+  <div class="posting-image"></div>
+  <p class="posting-author">
+    {{posting.author}}
+  </p>
+  <div class="posting-content">
+    <p>
+      {{posting.content}}
+    </p>
+  </div>
+  <input class="toggle-comments" type="button" [attr.value]="commentsExpaned ? 'Hide Comments' : 'Show Comments'" (click)="toggleCommentposting()">
+  <app-comment-section
+    *ngIf="commentsExpaned"
+    [sectionID]="posting.id"
+  ></app-comment-section>
+</div>
+<div class="" *ngIf="notfound">
+  <h1>POST NOT FOUND</h1>
+</div>
+
